@@ -1,7 +1,13 @@
+# jcolour #
 
-	# jcolour #
+jQuery colour manipulation.
 
-	## Installation ##
+$.colour.FN where FN is one of:
 
-	## Usage ##
-	
+* lighten
+* darken
+* col2rgb
+* rgb2hsl
+* rgb2col
+* rgb2hex
+* blend
