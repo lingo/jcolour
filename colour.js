@@ -188,7 +188,7 @@
 		*/
 		random: function() {
 			var r = function (x) { return Math.floor(Math.random() * x); };
-			return 'hsla(' + r(360) + ', ' + (20+r(80)) + '%, ' + (30+r(50)) + '%, 0.6)';
+			return 'hsl(' + r(360) + ', ' + r(100) + '%, ' + r(100) + '%)'; // ' + Math.random() + ')';
 		},
 
         rgb2hsl: function (rgb) {
