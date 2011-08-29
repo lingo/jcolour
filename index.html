@@ -4,8 +4,6 @@
 	<meta charset="UTF-8">
 	<title></title>
     <script src="jquery.min.js"></script>
-	<script src="sprintf.js" type="text/javascript"></script>
-	<script src="colour.js" type="text/javascript"></script>
 	<script src="color.js" type="text/javascript"></script>
 	<style type="text/css">
 	  body {
@@ -80,7 +78,6 @@
 			boxes.each(function(idx,x) {
 				lg += step;
 				var c3 = c1.blend(c2, lg);
-				console.log(idx, lg, c3.css());
 				$(x).css({background: c3.css()});
 			});
 		});

@@ -1,3 +1,22 @@
+/**
+ * Author: Luke Hudson <lukeletters@gmail.com>
+ * See: http://lingo.github.com/jcolour
+ *
+ * Usage:
+ * 		a = new Colr('#FF0000');  b = new Colr('rgba(128,200,100,0.4)');
+ * 		c = new Colr('hsl(220, 20%, 30%)');
+ * 		d = new Colr(); // random colour chosen
+ * 		e = d.clone();
+ *
+ * 		a.red(); b.sat(); c.light(); a.hue(); b.green(); d.blue();
+ * 		a.hsl().css();
+ * 		b.css();
+ * 		c.blend(a, 0.5);
+ * 		d.lighten();
+ * 		a.darken();
+ * 		c.red(200);
+ * 		a.hue(20).sat(10).light(3).css();
+ */
 function hex2rgb(hex) {
 	 if (typeof(hex) == 'object' && hex.length === 3) {
 		 return hex;
@@ -16,7 +35,7 @@ function Colr(cssclr) {
 		// copy ctor
 		var c2 = new Colr();
 		c2._css = cssclr._css;
-		c2.clr = cssclr.clr.filter(function(x) { return 1; }); // clone arr.
+		c2.clr = cssclr.clr.slice(); // clone arr
 		c2.type = cssclr.type;
 		return c2;
 	}
@@ -69,6 +88,10 @@ function Colr(cssclr) {
 	}
 	this.clr = c;
 }
+
+Colr.prototype.clone = function() {
+	return new Colr(this);
+};
 
 Colr.prototype.blend = function(colr2, step) {
 	if (typeof(step) == 'undefined') {
@@ -145,7 +168,7 @@ Colr.prototype.hsl = function () {
 	if (this.type == 'hsl') {
 		return this;
 	}
-	var rgb = this.clr.filter(function() {return 1;}); // clone
+	var rgb = this.clr.slice(); // clone
 	var R, G, B, i, H, S, L,
 		M, m, chroma, hue;
 	for (i = 0; i < 3; i++) {
@@ -185,9 +208,8 @@ Colr.prototype.hsl = function () {
 		}
 	}
 	hue = hue * 60.0;
-	var c2 = new Colr();
-	c2.type = 'hsl'; c2.clr = [hue, S * 100, L * 100, 1];
-	return c2;
+	this.type = 'hsl'; this.clr = [hue, S * 100, L * 100, 1];
+	return this;
 };
 
 
@@ -200,7 +222,7 @@ Colr.prototype.rgb = function (hsl) {
 		X, chroma,
 		m, rgb, i;
 
-	var hsl = this.clr.filter(function() {return 1;}); // clone
+	var hsl = this.clr.slice(); // clone array.
 	H = hsl[0]; S = hsl[1] / 100.0; L = hsl[2] / 100.0;
 	if (L <= 0.5) {
 		chroma = 2.0 * L * S;
@@ -222,37 +244,71 @@ Colr.prototype.rgb = function (hsl) {
 	for (i = 0; i < 3; i++) {
 		rgb[i] = rgb[i] * 255.0;
 	}
-	var c2 = new Colr();
-	c2.type = 'rgb'; c2.clr = rgb;
-	return c2;
+	rgb[3] = hsl[3];
+	this.type = 'rgb'; this.clr = rgb;
+	return this;
 } // end  hsl2rgb method
 
-Colr.prototype.hue = function() {
-	return this.hsl().clr[0];
+Colr.prototype.hue = function(x) {
+	this.hsl();
+	if (typeof(x) !== 'undefined') {
+		this.clr[0] = x;
+		return this;
+	}
+	return this.clr[0];
 };
 
-Colr.prototype.sat = function() {
-	return this.hsl().clr[1];
+Colr.prototype.sat = function(x) {
+	this.hsl();
+	if (typeof(x) !== 'undefined') {
+		this.clr[1] = x;
+		return this;
+	}
+	return this.clr[1];
 };
 
-Colr.prototype.light = function() {
-	return this.hsl().clr[2];
+Colr.prototype.light = function(x) {
+	this.hsl();
+	if (typeof(x) !== 'undefined') {
+		this.clr[2] = x;
+		return this;
+	}
+	return this.clr[2];
 };
 
-Colr.prototype.alpha = function() {
+Colr.prototype.alpha = function(x) {
+	if (typeof(x) !== 'undefined') {
+		this.clr[3] = x;
+		return this;
+	}
 	return this.clr[3];
 };
 
-Colr.prototype.red = function() {
-	return this.rgb().clr[0];
+Colr.prototype.red = function(x) {
+	this.rgb();
+	if (typeof(x) !== 'undefined') {
+		this.clr[0] = x;
+		return this;
+	}
+	return this.clr[0];
 };
 
-Colr.prototype.green = function() {
-	return this.rgb().clr[1];
+Colr.prototype.green = function(x) {
+	this.rgb();
+	if (typeof(x) !== 'undefined') {
+		this.clr[1] = x;
+		return this;
+	}
+	return this.clr[1];
 };
 
-Colr.prototype.blue = function() {
-	return this.rgb().clr[2];
+Colr.prototype.blue = function(x) {
+	this.rgb();
+	if (typeof(x) !== 'undefined') {
+		this.clr[2] = x;
+		return this;
+	}
+	return this.clr[2];
 };
 
 /**
