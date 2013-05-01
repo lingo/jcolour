@@ -30,14 +30,16 @@ function hex2rgb(hex) {
      return [parseInt(r, 16), parseInt(g, 16), parseInt(b, 16)];
 }
 
+/**
+ * @constructor 
+ * @param {...Colr} cssclr May be CSS color or Colr instance
+ */
 function Colr(cssclr) {
-    if (cssclr instanceof Colr) {
-        // copy ctor
-        var c2 = new Colr();
-        c2._css = cssclr._css;
-        c2.clr = cssclr.clr.slice(); // clone arr
-        c2.type = cssclr.type;
-        return c2;
+    if (typeof(cssclr) === 'object' && (cssClr instanceof Colr)) {
+        this._css = cssclr._css;
+        this.clr = cssclr.clr.slice(); // clone arr
+        this.type = cssclr.type;
+        return;
     }
 
     if (typeof(cssclr) != 'string') {
@@ -52,7 +54,7 @@ function Colr(cssclr) {
 
     if ((val = cssclr.match(/rgba\s*\(([^,]+),([^,]+),([^,]+),([^)]+)\)/))) {
         r = val[1]; g = val[2]; b = val[3]; o = val[4];
-        c = [parseInt(r, 10), parseInt(g, 10), parseInt(b, 10), parseFloat(o, 10)];
+        c = [parseInt(r, 10), parseInt(g, 10), parseInt(b, 10), parseFloat(o)];
     } else if ((val = cssclr.match(/rgb\s*\(([^,]+),([^,]+),([^)]+)\)/))) {
         r = val[1]; g = val[2]; b = val[3];
         c = [parseInt(r, 10), parseInt(g, 10), parseInt(b, 10), 1];
@@ -213,7 +215,10 @@ Colr.prototype.hsl = function () {
 };
 
 
-Colr.prototype.rgb = function (hsl) {
+/**
+ * Return the RGB format of this colour
+ */
+Colr.prototype.rgb = function () {
     if (this.type == 'rgb') {
         return this;
     }
