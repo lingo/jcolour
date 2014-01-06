@@ -36,7 +36,7 @@ function hex2rgb(hex) {
  * @param {...Colr} cssclr May be CSS color or Colr instance
  */
 function Colr(cssclr) {
-    if (typeof(cssclr) === 'object' && (cssClr instanceof Colr)) {
+    if (typeof(cssclr) === 'object' && (cssclr instanceof Colr)) {
         this._css = cssclr._css;
         this.clr = cssclr.clr.slice(); // clone arr
         this.type = cssclr.type;
