@@ -1,3 +1,4 @@
+(function(window,undefined) {
 /**
  * Author: Luke Hudson <lukeletters@gmail.com>
  * See: http://lingo.github.com/jcolour
@@ -325,3 +326,6 @@ Colr.random = function() {
     var r = function (x) { return Math.floor(Math.random() * x); };
     return 'hsl(' + r(360) + ', ' + r(100) + '%, ' + r(100) + '%)'; // ' + Math.random() + ')';
 };
+
+window.Colr = Colr;
+})(window);
