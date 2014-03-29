@@ -42,6 +42,10 @@ function Colr(cssclr) {
         this.clr = cssclr.clr.slice(); // clone arr
         this.type = cssclr.type;
         return;
+	} else if(typeof(cssclr) == 'object' && cssclr.clr) {
+		this.clr  = cssclr.clr.slice(); // clone arr
+		this.type = cssclr.type;
+		return;
 	}
 
 	if (typeof(cssclr) != 'string') {
@@ -56,7 +60,7 @@ function Colr(cssclr) {
 
 	if ((val = cssclr.match(/rgba\s*\(([^,]+),([^,]+),([^,]+),([^)]+)\)/))) {
 		r = val[1]; g = val[2]; b = val[3]; o = val[4];
-        c = [parseInt(r, 10), parseInt(g, 10), parseInt(b, 10), parseFloat(o)];
+		c = [parseInt(r, 10), parseInt(g, 10), parseInt(b, 10), parseFloat(o, 10)];
 	} else if ((val = cssclr.match(/rgb\s*\(([^,]+),([^,]+),([^)]+)\)/))) {
 		r = val[1]; g = val[2]; b = val[3];
 		c = [parseInt(r, 10), parseInt(g, 10), parseInt(b, 10), 1];
