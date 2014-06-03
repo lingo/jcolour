@@ -57,6 +57,7 @@ function Colr(cssclr) {
 	this.clr = [];
 
 	cssclr = cssclr.replace(/^#/, '');
+	var val,r,g,b,c,o;
 
 	if ((val = cssclr.match(/rgba\s*\(([^,]+),([^,]+),([^,]+),([^)]+)\)/))) {
 		r = val[1]; g = val[2]; b = val[3]; o = val[4];
@@ -108,8 +109,8 @@ Colr.prototype.blend = function(colr2, step) {
 	step = Math.max(0, Math.min(1, step));
 	colr2 = new Colr(colr2);
 	var c = new Colr(), i, diff;
-	clr1 = this.clr;
-	clr2 = colr2.clr;
+	var clr1 = this.clr;
+	var clr2 = colr2.clr;
 	if (!(clr1 && clr2)) {
 		return new Colr(this);
 	}
@@ -129,8 +130,8 @@ Colr.prototype.blendhsl = function(colr2, step) {
 	step = Math.max(0, Math.min(1, step));
 	colr2 = new Colr(colr2).hsl();
 	var c = new Colr().hsl(), i, diff;
-	clr1 = this.clr;
-	clr2 = colr2.clr;
+	var clr1 = this.clr;
+	var clr2 = colr2.clr;
 	if (!(clr1 && clr2)) {
 		return new Colr(this);
 	}
@@ -188,7 +189,7 @@ Colr.prototype.hsl = function () {
 		return this;
 	}
 	var rgb = this.clr.slice(); // clone
-	var R, G, B, i, H, S, L,
+	var R, G, B, i, S, L,
 		M, m, chroma, hue;
 	for (i = 0; i < 3; i++) {
 		rgb[i] = rgb[i] / 255.0;
