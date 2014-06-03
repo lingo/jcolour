@@ -160,13 +160,24 @@ Colr.prototype.lighten = function(step) {
 	return c2;
 };
 
-Colr.prototype.css = function() {
-	switch(this.type) {
+Colr.prototype.css = function(type) {
+	if (typeof type === 'undefined') {
+		type = this.type;
+	}
+	switch(type) {
 		case 'hsl':
 			this._css = 'hsla(' + this.clr[0] + ', ' + this.clr[1] + '%, ' + this.clr[2] + '%, ' + this.clr[3] + ')';
 			break;
 		case 'rgb':
 			this._css = 'rgba(' + parseInt(this.clr[0],10) + ', ' + parseInt(this.clr[1],10) + ', ' + parseInt(this.clr[2],10) + ', ' + this.clr[3] + ')';
+			break;
+		case 'hex':
+			this.rgb();
+			var r,g,b;
+			r = parseInt(this.clr[0],10); r = r.toString(16); r = (r.length < 2) ? '0' + r: r;
+			g = parseInt(this.clr[1],10); g = g.toString(16); g = (g.length < 2) ? '0' + g: g;
+			b = parseInt(this.clr[2],10); b = b.toString(16); b = (b.length < 2) ? '0' + b: b;
+			this._css = '#' + r + g + b;
 			break;
 	}
 	return this._css;
